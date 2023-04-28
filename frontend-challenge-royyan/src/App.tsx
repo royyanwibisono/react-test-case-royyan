@@ -1,4 +1,3 @@
-import AuthComponent from './presentation/view/auth/AuthComponent';
 import HomeComponent from './presentation/view/home/HomeComponent';
 import AuthViewModelImpl from './presentation/view-model/auth/AuthViewModelImpl';
 import AuthFakeApi from './data/auth/AuthFakeApi';
@@ -22,8 +21,8 @@ function App() {
   const authViewModel = new AuthViewModelImpl(loginUseCase, authHolder);
 
   return (
-    <HomeComponent homeViewModel={homeViewModel}>
-      <AuthComponent authViewModel={authViewModel} />
+    <HomeComponent homeViewModel={homeViewModel} authViewModel={authViewModel}>
+      <p>Hello World!</p>
     </HomeComponent>
   );
 }

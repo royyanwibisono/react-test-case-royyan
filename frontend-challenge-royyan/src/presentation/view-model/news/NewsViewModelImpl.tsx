@@ -1,41 +1,40 @@
-import AuthViewModel from './AuthViewModel';
-import BaseView from '../../view/BaseView';
-import LoginUseCase from '../../../domain/interactors/auth/LoginUseCase';
-import AuthHolder from '../../../domain/entity/auth/models/AuthHolder';
-import AuthListener from '../../../domain/entity/auth/models/AuthListener';
-import FormValidator from '../../util/FormValidator';
+import NewsHolder from "../../../domain/entity/news/models/NewsHolder";
+import NewsListener from "../../../domain/entity/news/models/NewsListener";
+import NewsViewModel from "./NewsViewModel";
 
-export default class AuthViewModelImpl implements AuthViewModel, AuthListener {
-  public emailQuery: string;
-  public passwordQuery: string;
-  public isSignInButtonVisible: boolean;
-  public isSignOutButtonVisible: boolean;
+export default class NewsViewModelImpl implements NewsViewModel, NewsListener {
+  public country: string;
+  public category: string;
+  public sources: string;
+  public keyword: string;
+  public pageSize: number;
+  public page: number
 
   public isShowError: boolean;
   public errorMessage: string;
-
-  public authStatus: string;
-  public isAuthStatusPositive: boolean;
-
-  public visible: boolean;
-  public onClose: (() => void) | null;
-  public confirmLoading:boolean;
+ 
+  public status: string;
+  public totalResults: number;
+  public articles: unknown;
 
   private baseView?: BaseView;
   private loginUseCase: LoginUseCase;
   private authHolder: AuthHolder;
 
-  public constructor(loginUseCase: LoginUseCase, authHolder: AuthHolder) {
-    this.emailQuery = '';
-    this.passwordQuery = '';
-    this.isSignInButtonVisible = true;
-    this.isSignOutButtonVisible = false;
+  public constructor(loginUseCase: LoginUseCase, newsHolder: NewsHolder) {
+    this.country = 'id';
+    this.category = "";
+    this.sources = "";
+    this.keyword = "";
+    this.pageSize = 20;
+    this.page = 0
 
     this.isShowError = false;
     this.errorMessage = '';
 
-    this.authStatus = 'is not authorized';
-    this.isAuthStatusPositive = false;
+    status: string;
+    totalResults: number;
+    articles: unknown;
 
     this.loginUseCase = loginUseCase;
     this.authHolder = authHolder;

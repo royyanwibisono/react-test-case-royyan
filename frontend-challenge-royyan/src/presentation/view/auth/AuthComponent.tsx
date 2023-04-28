@@ -2,7 +2,8 @@ import React from 'react';
 import './auth-component.css';
 import BaseView from '../BaseView';
 import AuthViewModel from '../../view-model/auth/AuthViewModel';
-import { Button, Input } from 'antd';
+import { Button, Input, Modal, Row, Space } from 'antd';
+import Text from 'antd/es/typography/Text';
 
 export interface AuthComponentProps {
   authViewModel: AuthViewModel;
@@ -19,6 +20,9 @@ export interface AuthComponentState {
 
   authStatus: string;
   isAuthStatusPositive: boolean;
+
+  visible: boolean;
+  onClose : (() => void) | null;
 }
 
 export default class AuthComponent extends React.Component<AuthComponentProps, AuthComponentState>
@@ -42,6 +46,9 @@ export default class AuthComponent extends React.Component<AuthComponentProps, A
 
       authStatus: authViewModel.authStatus,
       isAuthStatusPositive: authViewModel.isAuthStatusPositive,
+
+      visible: authViewModel.visible,
+      onClose: authViewModel.onClose,
     };
   }
 
@@ -65,6 +72,9 @@ export default class AuthComponent extends React.Component<AuthComponentProps, A
 
       authStatus: this.authViewModel.authStatus,
       isAuthStatusPositive: this.authViewModel.isAuthStatusPositive,
+
+      visible: this.authViewModel.visible,
+      onClose: this.authViewModel.onClose,
     });
   }
 
@@ -80,65 +90,78 @@ export default class AuthComponent extends React.Component<AuthComponentProps, A
 
       authStatus,
       isAuthStatusPositive,
+
+      visible,
     } = this.state;
 
     return (
-      <div className="row flex-grow-1 d-flex justify-content-center align-items-center">
-        <div className="auth-container col bg-white border rounded-lg py-4 px-5">
-          <div className="row mt-2 mb-4">
-            Status:&nbsp;
-            <span className={`${isAuthStatusPositive ? 'text-success' : 'text-danger'}`}>
-              {authStatus}
-            </span>
-          </div>
-
-          <div className="row mt-2">
-            <Input
-              placeholder="user@email.com"
-              onChange={(e: React.FormEvent<HTMLInputElement>): void => {
-                this.authViewModel.onEmailQueryChanged(e.currentTarget.value);
-              }}
-              value={emailQuery}
-              className="form-control"
-            />
-          </div>
-          <div className="row mt-2">
-            <Input.Password
-              placeholder="password"
-              onChange={(e: React.FormEvent<HTMLInputElement>): void => {
-                this.authViewModel.onPasswordQueryChanged(e.currentTarget.value);
-              }}
-              value={passwordQuery}
-              className="form-control"
-            />
-          </div>
-
-          {isShowError && (
-            <div className="row my-3 text-danger justify-content-center">{errorMessage}</div>
-          )}
-
-          {isSignInButtonVisible && (
-            <div className="row mt-4">
-              <Button type="primary" 
-                onClick={(): void => this.authViewModel.onClickSignIn()}>
-                  Sign in
-              </Button>
+      <>
+        <Button type="ghost" onClick={this.authViewModel.onShowModal}>
+          Login
+        </Button>
+      
+        <Modal
+          title="Login"
+          open={visible}
+          // confirmLoading={confirmLoading}
+          onCancel={this.authViewModel.onHandleCancel}
+          footer = {[]}
+        >
+          <Space
+            direction="vertical"
+            size="middle"
+            style={{
+              display: 'flex',
+            }}>
+            <div className="">
+              Status:&nbsp;
+              <Text type={`${isAuthStatusPositive ? 'success' : 'danger'}`}>{authStatus}</Text>
             </div>
-          )}
 
-          {isSignOutButtonVisible && (
-            <div className="row mt-4">
-              <button
-                type="button"
-                className="col btn btn-primary"
-                onClick={(): void => this.authViewModel.onClickSignOut()}
-              >
-                Sign out
-              </button>
+            <div className="row mt-2">
+              <Input
+                placeholder="user@email.com"
+                onChange={(e: React.FormEvent<HTMLInputElement>): void => {
+                  this.authViewModel.onEmailQueryChanged(e.currentTarget.value);
+                }}
+                value={emailQuery}
+              />
             </div>
-          )}
-        </div>
-      </div>
+            <div className="row mt-2">
+              <Input.Password
+                placeholder="password"
+                onChange={(e: React.FormEvent<HTMLInputElement>): void => {
+                  this.authViewModel.onPasswordQueryChanged(e.currentTarget.value);
+                }}
+                value={passwordQuery}
+              />
+            </div>
+
+            {isShowError && (
+              <Text type='danger'>{errorMessage}</Text>
+            )}
+
+            {isSignInButtonVisible && (
+              <Row justify="end">
+                <Button type="primary" 
+                  onClick={(): void => this.authViewModel.onClickSignIn()}>
+                    Sign in
+                </Button>
+              </Row>
+            )}
+
+            {isSignOutButtonVisible && (
+              <Row justify="end">
+                <Button type="default" 
+                  onClick={(): void => this.authViewModel.onClickSignOut()}
+                >
+                  Sign out
+                </Button>
+              </Row>
+            )}
+          </Space>
+        </Modal>
+      </>
     );
   }
 }

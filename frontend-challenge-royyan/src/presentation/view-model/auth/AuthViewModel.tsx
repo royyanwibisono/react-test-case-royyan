@@ -13,8 +13,14 @@ export default interface AuthViewModel extends BaseViewModel {
   authStatus: string;
   isAuthStatusPositive: boolean;
 
+  visible: boolean;
+  onClose: (() => void) | null;
+
   onEmailQueryChanged(loginQuery: string): void;
   onPasswordQueryChanged(passwordQuery: string): void;
   onClickSignIn(): void;
   onClickSignOut(): void;
+  
+  onHandleCancel(): void;
+  onShowModal(): void;
 }
