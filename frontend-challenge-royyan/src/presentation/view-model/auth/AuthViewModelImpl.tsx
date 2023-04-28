@@ -69,7 +69,6 @@ export default class AuthViewModelImpl implements AuthViewModel, AuthListener {
   };
 
   public onAuthChanged = (): void => {
-    console.log("onAuthChanged")
     if (this.authHolder.isUserAuthorized()) {
       this.isSignInButtonVisible = false;
       this.isSignOutButtonVisible = true;

@@ -31,11 +31,6 @@ body {
   min-height: 100vh;
 }
 
-.container{
-  width: 100vw;
-  height: 100vh;
-}
-
 .light-mode {
   color: #213547;
   background-color: #ffffff;

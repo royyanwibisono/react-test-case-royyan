@@ -8,7 +8,7 @@ export default class NewsApi implements NewsRepository {
   /**
    * @throws {Error} if validation has not passed
    */
-  validateInputArgs(country: string, category: string, sources: string, keyword: string): Promise<CheckArgsResult> {
+  validateInputArgs(country: string, category: string, sources: string, keyword: string, pageSize: number, page: number): Promise<CheckArgsResult> {
     return new Promise((resolve, reject) => {
 
       //rules from news API ducumentation
@@ -32,6 +32,16 @@ export default class NewsApi implements NewsRepository {
         return;
       }
 
+      if (pageSize <1){
+        reject(new Error('Page size must be greater than 0.'));
+        return;
+      }
+
+      if (page <1){
+        reject(new Error('Page size must be greater than 0.'));
+        return;
+      }
+
       resolve({
         valid: true,
       });
@@ -41,16 +51,16 @@ export default class NewsApi implements NewsRepository {
   /**
    * @throws {Error} if credentials have not passed
    */
-  getTopHeadline(country: string, category: string, sources: string, keyword: string, pageSize: number, page: number): Promise<NewsResult>
+  getTopHeadline(isValid: boolean, country: string, category: string, sources: string, keyword: string, pageSize: number, page: number): Promise<NewsResult>
   {
     const param = sources.length > 0 ? {
-      apiKey: import.meta.env.NEWS_API_KEY,
+      apiKey: import.meta.env.VITE_NEWS_API_KEY,
       sources,
       q: keyword,
       pageSize,
       page,
     } : {
-      apiKey: import.meta.env.NEWS_API_KEY,
+      apiKey: import.meta.env.VITE_NEWS_API_KEY,
       country,
       category,
       q: keyword,
@@ -58,18 +68,20 @@ export default class NewsApi implements NewsRepository {
       page,
     }
     return new Promise((resolve, reject) => {
+      if (!isValid){
+        reject(new Error('Invalid input.'));
+        return;
+      }
+
       axios
-      .get(import.meta.env.BASE_URL, {
+      .get(NewsApiUtils.getEndPoint(), {
         params: param,
       })
       .then((response) => {
         if (response.status === 200) {
-          resolve(response.data);
+          resolve(response.data as NewsResult);
         } else {
-          reject(
-            new Error(`Request failed with status code ${response.status}.`)
-          );
-          return;
+          resolve({status: "fail", totalResults: 0, articles: []} as NewsResult);
         }
       })
       .catch((error) => {

@@ -6,23 +6,32 @@ import SettingsUseCase from './domain/interactors/home/SettingsUseCase';
 import AuthHolder from './domain/entity/auth/models/AuthHolder';
 import HomeHolder from './domain/entity/home/models/HomeHolder';
 import HomeViewModelImpl from './presentation/view-model/home/HomeViewModelImpl';
+import NewsApi from './data/news/NewsApi';
+import NewsHolder from './domain/entity/news/models/NewsHolder';
+import FindNewsUseCase from './domain/interactors/news/FindNewsUseCase';
+import NewsViewModelImpl from './presentation/view-model/news/NewsViewModelImpl';
+import NewsComponent from './presentation/view/news/NewsComponent';
 
 function App() {
   // data layer
   const authRepository = new AuthFakeApi();
+  const newsRRepository = new NewsApi()
   // domain layer
   const homeHolder = new HomeHolder();
   const authHolder = new AuthHolder();
+  const newsHolder = new NewsHolder()
   const settingsUseCase = new SettingsUseCase(homeHolder);
   const loginUseCase = new LoginUseCase(authRepository, authHolder);
+  const findNewsUseCase = new FindNewsUseCase(newsRRepository,newsHolder)
 
   // view layer
   const homeViewModel = new HomeViewModelImpl(settingsUseCase, homeHolder)
   const authViewModel = new AuthViewModelImpl(loginUseCase, authHolder);
+  const newsViewModel = new NewsViewModelImpl(findNewsUseCase, newsHolder);
 
   return (
     <HomeComponent homeViewModel={homeViewModel} authViewModel={authViewModel}>
-      <p>Hello World!</p>
+      <NewsComponent newsViewModel={newsViewModel} />
     </HomeComponent>
   );
 }

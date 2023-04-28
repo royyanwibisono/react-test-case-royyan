@@ -13,8 +13,7 @@ export default interface NewsViewModel extends BaseViewModel {
 
   status: string;
   totalResults: number;
-  articles: unknown;
+  articles: [];
 
-  onNewsChanged(args : unknown): void;
-  onSearchNews(country: string, category: string, sources: string, keyword: string, pageSize: number, page: number): void;
+  onSearchNews(): void;
 }

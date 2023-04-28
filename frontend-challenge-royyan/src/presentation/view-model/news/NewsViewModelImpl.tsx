@@ -1,5 +1,7 @@
 import NewsHolder from "../../../domain/entity/news/models/NewsHolder";
 import NewsListener from "../../../domain/entity/news/models/NewsListener";
+import FindNewsUseCase from "../../../domain/interactors/news/FindNewsUseCase";
+import BaseView from "../../view/BaseView";
 import NewsViewModel from "./NewsViewModel";
 
 export default class NewsViewModelImpl implements NewsViewModel, NewsListener {
@@ -12,51 +14,34 @@ export default class NewsViewModelImpl implements NewsViewModel, NewsListener {
 
   public isShowError: boolean;
   public errorMessage: string;
- 
+
   public status: string;
   public totalResults: number;
-  public articles: unknown;
+  public articles: [];
 
   private baseView?: BaseView;
-  private loginUseCase: LoginUseCase;
-  private authHolder: AuthHolder;
+  private findNewsUseCase: FindNewsUseCase;
+  private newsHolder: NewsHolder;
 
-  public constructor(loginUseCase: LoginUseCase, newsHolder: NewsHolder) {
+  public constructor(findNewsUseCase: FindNewsUseCase, newsHolder: NewsHolder) {
     this.country = 'id';
     this.category = "";
     this.sources = "";
     this.keyword = "";
     this.pageSize = 20;
-    this.page = 0
+    this.page = 1
 
     this.isShowError = false;
     this.errorMessage = '';
 
-    status: string;
-    totalResults: number;
-    articles: unknown;
+    this.status = "";
+    this.totalResults = 0
+    this.articles = [];
 
-    this.loginUseCase = loginUseCase;
-    this.authHolder = authHolder;
+    this.findNewsUseCase = findNewsUseCase;
+    this.newsHolder = newsHolder;
 
-    this.authHolder.addAuthListener(this);
-
-    this.visible = false;
-    this.onClose = null;
-    this.confirmLoading = false;
-  }
-
-  public onHandleCancel = (): void => {
-    this.visible = false;
-    if (this.onClose) {
-      this.onClose();
-    }
-    this.notifyViewAboutChanges();
-  }
-
-  public onShowModal = (): void => {
-    this.visible = true;
-    this.notifyViewAboutChanges();
+    this.newsHolder.addNewsListener(this);
   }
 
   public attachView = (baseView: BaseView): void => {
@@ -67,87 +52,17 @@ export default class NewsViewModelImpl implements NewsViewModel, NewsListener {
     this.baseView = undefined;
   };
 
-  public onAuthChanged = (): void => {
-    console.log("onAuthChanged")
-    if (this.authHolder.isUserAuthorized()) {
-      this.isSignInButtonVisible = false;
-      this.isSignOutButtonVisible = true;
-      this.authStatus = 'authorized';
-      this.isAuthStatusPositive = true;
-    } else {
-      this.isSignInButtonVisible = true;
-      this.isSignOutButtonVisible = false;
-      this.authStatus = 'is not autorized';
-      this.isAuthStatusPositive = false;
-    }
-
+  public onNewsChanged = (): void => {
+    this.status = this.newsHolder.getStatus();
+    this.totalResults = this.newsHolder.getTotalResult();
+    this.articles = this.newsHolder.getArticles();
     this.notifyViewAboutChanges();
-  };
+  }
 
-  public onEmailQueryChanged = (loginQuery: string): void => {
-    this.emailQuery = loginQuery;
+  public onSearchNews = (): void => {
+    this.status = "loading";
+    this.findNewsUseCase.searchNews(this.country,this.category,this.sources,this.keyword,this.pageSize,this.page);
     this.notifyViewAboutChanges();
-  };
-
-  public onPasswordQueryChanged = (passwordQuery: string): void => {
-    this.passwordQuery = passwordQuery;
-    this.notifyViewAboutChanges();
-  };
-
-  public onClickSignIn = async (): Promise<void> => {
-    if (!this.validateLoginForm()) {
-      this.notifyViewAboutChanges();
-      return;
-    }
-
-    try {
-      await this.loginUseCase.loginUser(this.emailQuery, this.passwordQuery);
-      this.isShowError = false;
-      this.errorMessage = '';
-    } catch (e : any) {
-      this.errorMessage = e.message;
-      this.isShowError = true;
-    }
-
-    this.notifyViewAboutChanges();
-  };
-
-  public onClickSignOut = (): void => {
-    this.authHolder.onSignedOut();
-  };
-
-  private validateLoginForm = (): boolean => {
-    if (!this.emailQuery) {
-      this.isShowError = true;
-      this.errorMessage = 'Email cannot be empty';
-      return false;
-    }
-    if (this.errorMessage === 'Email cannot be empty') {
-      this.isShowError = false;
-      this.errorMessage = '';
-    }
-
-    if (!FormValidator.isValidEmail(this.emailQuery)) {
-      this.isShowError = true;
-      this.errorMessage = 'Email format is not valid';
-      return false;
-    }
-    if (this.errorMessage === 'Email format is not valid') {
-      this.isShowError = false;
-      this.errorMessage = '';
-    }
-
-    if (!this.passwordQuery) {
-      this.isShowError = true;
-      this.errorMessage = 'Password cannot be empty';
-      return false;
-    }
-    if (this.errorMessage === 'Password cannot be empty') {
-      this.isShowError = false;
-      this.errorMessage = '';
-    }
-
-    return true;
   }
 
   private notifyViewAboutChanges = (): void => {

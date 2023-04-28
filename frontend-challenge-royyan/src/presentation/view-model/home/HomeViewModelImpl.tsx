@@ -37,7 +37,7 @@ export default class HomeViewModelImpl implements HomeViewModel, HomeListener {
     this.notifyViewAboutChanges();
   };
 
-  onDarkModeChanged = (isDarkMode: boolean, mode: string): void =>{
+  public onDarkModeChanged = (isDarkMode: boolean, mode: string): void =>{
     this.isDarkMode = isDarkMode;
     this.darkModeString = mode;
     this.notifyViewAboutChanges();

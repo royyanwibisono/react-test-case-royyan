@@ -4,16 +4,16 @@ export default class NewsHolder {
   private _newsListeners: NewsListener[];
   private _status: string;
   private _totalResults: number;
-  private _articles: unknown;
+  private _articles: [];
 
   public constructor() {
     this._status = "";
     this._totalResults = 0;
-    this._articles = null;
+    this._articles = [];
     this._newsListeners = [];
   }
 
-  public onUpdateNews(status: string, totalResults: number, articles: unknown): void {
+  public onUpdateNews(status: string, totalResults: number, articles: []): void {
     this._status = status;
     this._totalResults = totalResults;
     this._articles = articles;
@@ -28,10 +28,9 @@ export default class NewsHolder {
     return this._totalResults;
   }
 
-  public getArticles(): unknown {
+  public getArticles(): [] {
     return this._articles;
   }
-
 
   public addNewsListener(newsListener: NewsListener): void {
     this._newsListeners.push(newsListener);

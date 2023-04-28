@@ -6,4 +6,8 @@ export default class NewsApiUtils {
   static isCountryValid(country : string): boolean {
     return this.getCountryList().includes(country)
   }
+
+  static getEndPoint(): string {
+    return "https://newsapi.org/v2/top-headlines"
+  }
 }
