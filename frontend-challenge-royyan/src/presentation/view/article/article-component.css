@@ -1,0 +1,30 @@
+
+
+.acontainer{
+  width: 100vw;
+  min-height: calc(100vw - var(--header-height));
+  position: fixed;
+  top: 35px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+}
+
+header.article{
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-height);
+}
+
+.light-mode header.article{
+  background: #2970b8;
+}
+
+.acontainer .content{
+  flex: 1;
+  overflow: auto;
+  min-height: calc(100vh - var(--header-height) - 35px);
+  max-height: calc(100vh - var(--header-height) - 35px);
+}

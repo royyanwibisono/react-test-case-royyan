@@ -24,10 +24,10 @@ export default class NewsViewModelImpl implements NewsViewModel, NewsListener {
   private newsHolder: NewsHolder;
 
   public constructor(findNewsUseCase: FindNewsUseCase, newsHolder: NewsHolder) {
-    this.country = 'id';
+    this.country = "";
     this.category = "";
     this.sources = "";
-    this.keyword = "";
+    this.keyword = "frontend";
     this.pageSize = 20;
     this.page = 1
 
@@ -56,12 +56,28 @@ export default class NewsViewModelImpl implements NewsViewModel, NewsListener {
     this.status = this.newsHolder.getStatus();
     this.totalResults = this.newsHolder.getTotalResult();
     this.articles = this.newsHolder.getArticles();
+    this.errorMessage = this.newsHolder.getCode() +" : " +this.newsHolder.getMessage();
+    this.isShowError = this.newsHolder.getCode().length > 0;
     this.notifyViewAboutChanges();
   }
 
-  public onSearchNews = (): void => {
+  public onSearchNews = (country: string, category: string, sources: string, keyword: string, pageSize: number, page: number): void => {
     this.status = "loading";
-    this.findNewsUseCase.searchNews(this.country,this.category,this.sources,this.keyword,this.pageSize,this.page);
+    this.country = country;
+    this.category = category;
+    this.sources = sources;
+    this.keyword = keyword;
+    this.page = page;
+    this.pageSize = pageSize;
+    this.findNewsUseCase.searchNews(country,category,sources,keyword,pageSize,page);
+    this.notifyViewAboutChanges();
+  }
+
+  public onPagination(pageSize: number, page: number): void {
+    this.status = "loading";
+    this.page = page;
+    this.pageSize = pageSize;
+    this.findNewsUseCase.searchNews(this.country,this.category,this.sources,this.keyword,pageSize,page);
     this.notifyViewAboutChanges();
   }
 

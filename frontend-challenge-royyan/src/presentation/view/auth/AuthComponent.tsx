@@ -97,7 +97,7 @@ export default class AuthComponent extends React.Component<AuthComponentProps, A
     return (
       <>
         <Button type="ghost" onClick={this.authViewModel.onShowModal}>
-          Login
+          LOGIN
         </Button>
       
         <Modal
@@ -113,7 +113,7 @@ export default class AuthComponent extends React.Component<AuthComponentProps, A
             style={{
               display: 'flex',
             }}>
-            <div className="">
+            <div>
               Status:&nbsp;
               <Text type={`${isAuthStatusPositive ? 'success' : 'danger'}`}>{authStatus}</Text>
             </div>

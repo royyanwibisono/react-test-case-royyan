@@ -11,5 +11,5 @@ export default interface NewsRepository {
   /**
    * @throws {Error} if credentials have not passed
    */
-  getTopHeadline(isValid: boolean, country: string, category: string, sources: string, keyword: string, pageSize: number, page: number): Promise<NewsResult>;
+  getNewsQuery(isValid: boolean, country: string, category: string, sources: string, keyword: string, pageSize: number, page: number): Promise<NewsResult>;
 }

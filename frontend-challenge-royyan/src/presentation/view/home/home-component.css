@@ -1,7 +1,8 @@
 .container{
   width: 100vw;
   min-height: 100vh;
-  overflow: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 header.header{
@@ -9,8 +10,16 @@ header.header{
   display: flex;
   align-items: center;
   justify-content: space-between;
+  height: var(--header-height);
 }
 
 .light-mode header.header{
   background: #2970b8;
 } 
+
+.container .content{
+  flex: 1;
+  overflow: auto;
+  min-height: calc(100vh - var(--header-height));
+  max-height: calc(100vh - var(--header-height));
+}

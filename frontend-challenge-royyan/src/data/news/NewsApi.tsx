@@ -12,17 +12,17 @@ export default class NewsApi implements NewsRepository {
     return new Promise((resolve, reject) => {
 
       //rules from news API ducumentation
-      if (country !== "" && sources !== "" ){
+      if (country !== "" && sources !== "" && keyword === ""){
         reject(new Error("You can't mix 'country' param with the 'sources' param. "));
         return;
       }
 
-      if (category !== "" && sources !== "" ){
+      if (category !== "" && sources !== "" && keyword === ""){
         reject(new Error("You can't mix 'category' param with the 'sources' param. "));
         return;
       }
 
-      if (!NewsApiUtils.isCountryValid(country)) {
+      if (!NewsApiUtils.isCountryValid(country) && keyword === "") {
         reject(new Error('Invalid country: ' + country + '.'));
         return;
       }
@@ -51,19 +51,22 @@ export default class NewsApi implements NewsRepository {
   /**
    * @throws {Error} if credentials have not passed
    */
-  getTopHeadline(isValid: boolean, country: string, category: string, sources: string, keyword: string, pageSize: number, page: number): Promise<NewsResult>
+  getNewsQuery(isValid: boolean, country: string, category: string, sources: string, keyword: string, pageSize: number, page: number): Promise<NewsResult>
   {
-    const param = sources.length > 0 ? {
+    const param = keyword.length> 0? {
+      apiKey: import.meta.env.VITE_NEWS_API_KEY,
+      q: keyword,
+      pageSize,
+      page,
+    } : sources.length > 0 ? {
       apiKey: import.meta.env.VITE_NEWS_API_KEY,
       sources,
-      q: keyword,
       pageSize,
       page,
     } : {
       apiKey: import.meta.env.VITE_NEWS_API_KEY,
       country,
       category,
-      q: keyword,
       pageSize,
       page,
     }
@@ -74,19 +77,18 @@ export default class NewsApi implements NewsRepository {
       }
 
       axios
-      .get(NewsApiUtils.getEndPoint(), {
+      .get(NewsApiUtils.getEndPoint(keyword), {
         params: param,
       })
       .then((response) => {
-        if (response.status === 200) {
-          resolve(response.data as NewsResult);
-        } else {
-          resolve({status: "fail", totalResults: 0, articles: []} as NewsResult);
-        }
+        resolve(response.data as NewsResult);
       })
       .catch((error) => {
-        reject(new Error(`Unable to fetch news data: ${error.message}.`));
-        return;
+        if (!error.response.data){
+          reject(new Error(`Unable to fetch news data: ${error.message}.`));
+          return;
+        }
+        resolve(error.response.data as NewsResult);
       });
     });
   }

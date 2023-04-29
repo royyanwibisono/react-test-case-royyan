@@ -2,5 +2,7 @@
 export default interface NewsResult {
   status: string;
   totalResults: number;
-  articles: []
+  articles: [];
+  code : string;
+  message: string;
 }

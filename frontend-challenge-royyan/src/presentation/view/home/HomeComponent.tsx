@@ -94,11 +94,9 @@ export default class HomeComponent extends React.Component<HomeComponentProps, H
               
             </div>
           </Header>
-          <Layout>
-            <Content>
-              {this.children}
-            </Content>
-          </Layout>
+          <Content className='content'>
+            {this.children}
+          </Content>
         </Layout>
       </ConfigProvider>
     );

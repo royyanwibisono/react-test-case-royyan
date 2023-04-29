@@ -15,8 +15,8 @@ export default class FindNewsUseCase {
    */
   public async searchNews(country: string, category: string, sources: string, keyword: string, pageSize: number, page: number): Promise<void> {
     const validationResult = await this.newsRepository.validateInputArgs(country,category,sources,keyword,pageSize,page);
-    const newsResult = await this.newsRepository.getTopHeadline(validationResult.valid, country,category,sources,keyword,pageSize,page);
+    const newsResult = await this.newsRepository.getNewsQuery(validationResult.valid, country,category,sources,keyword,pageSize,page);
 
-    this.newsHolder.onUpdateNews(newsResult.status,newsResult.totalResults,newsResult.articles);
+    this.newsHolder.onUpdateNews(newsResult.status,newsResult.totalResults,newsResult.articles, newsResult.code, newsResult.message);
   }
 }

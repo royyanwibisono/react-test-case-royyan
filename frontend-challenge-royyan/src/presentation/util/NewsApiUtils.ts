@@ -7,7 +7,8 @@ export default class NewsApiUtils {
     return this.getCountryList().includes(country)
   }
 
-  static getEndPoint(): string {
-    return "https://newsapi.org/v2/top-headlines"
+  static getEndPoint(keyword: string): string {
+    // return "https://newsapi.org/v2/top-headlines"
+    return keyword.length > 0 ? "https://newsapi.org/v2/everything" : "https://newsapi.org/v2/top-headlines"
   }
 }
