@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Layout, Row, Typography} from 'antd';
+import { Button, Layout, Typography} from 'antd';
 import ArticleViewModel from '../../view-model/article/ArticleViewModel';
 import { ISource } from '../../../domain/entity/article/models/ArticleHolder';
 import BaseView from '../BaseView';
@@ -122,11 +122,13 @@ export default class ArticleComponent extends React.Component<ArticleComponentPr
                 <p style={{ fontSize: '1.2em', lineHeight: '1.5' }}>
                   {description}
                 </p>
-                <Row align={'middle'}>
-                  <Col span={6}><strong>| Author:</strong> {author??"Unknown"}</Col>
-                  <Col span={6}><strong>| Source:</strong> {source.name}</Col> 
-                  <Col span={6}><strong>| Published:</strong> {moment(publishedAt).fromNow()}</Col>
-                </Row>
+                <div>
+                  <span><strong>Author:</strong> {author??"Unknown"}</span>
+                  <span style={{ margin: '0 10px' }}>|</span>
+                  <span><strong>Source:</strong> {source.name}</span>
+                  <span style={{ margin: '0 10px' }}>|</span>
+                  <span><strong>Published:</strong> {moment(publishedAt).fromNow()}</span>
+                </div>
                 <p style={{ marginTop: '1em', fontSize: '1.4em' }}>{content}</p>
                 <Button type='primary' href={url}>Continue reading...</Button>
               </div>

@@ -1,7 +1,7 @@
 import React from "react";
 import NewsViewModel from "../../view-model/news/NewsViewModel";
 import BaseView from "../BaseView";
-import { Card, Pagination, Typography } from "antd";
+import { Button, Card, Pagination, Typography } from "antd";
 import moment from "moment";
 import ArticleViewModel from "../../view-model/article/ArticleViewModel";
 import ArticleComponent from "../article/ArticleComponent";
@@ -169,9 +169,12 @@ export default class NewsComponent extends React.Component<NewsComponentProps, N
       </div> */}
       {pagination}
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
-        {isShowError?<p>
+        {isShowError?<>
+        <p style={{padding: '2rem'}}>
           <Text type='danger'>{errorMessage}</Text>
-        </p> 
+        </p>
+        <Button type="primary" href={process.env.PUBLIC_URL}>OK</Button>
+        </> 
         : 
         articles.map((item: ArticleViewModel, index: number) => (
           <Card
