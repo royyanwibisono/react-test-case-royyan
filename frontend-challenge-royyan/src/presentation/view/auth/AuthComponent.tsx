@@ -3,7 +3,9 @@ import './auth-component.css';
 import BaseView from '../BaseView';
 import AuthViewModel from '../../view-model/auth/AuthViewModel';
 import { Button, Input, Modal, Row, Space } from 'antd';
-import Text from 'antd/es/typography/Text';
+import { Typography } from 'antd';
+
+const { Text } = Typography;
 
 export interface AuthComponentProps {
   authViewModel: AuthViewModel;

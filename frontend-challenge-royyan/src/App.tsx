@@ -11,7 +11,6 @@ import NewsHolder from './domain/entity/news/models/NewsHolder';
 import FindNewsUseCase from './domain/interactors/news/FindNewsUseCase';
 import NewsViewModelImpl from './presentation/view-model/news/NewsViewModelImpl';
 import NewsComponent from './presentation/view/news/NewsComponent';
-import ArticleViewModel from './presentation/view-model/article/ArticleViewModel';
 import ArticleHolder from './domain/entity/article/models/ArticleHolder';
 import ArticleViewModelImpl from './presentation/view-model/article/ArticleViewModelImpl';
 
@@ -41,3 +40,4 @@ function App() {
 }
 
 export default App
+

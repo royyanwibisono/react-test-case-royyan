@@ -104,6 +104,7 @@ export default class AuthViewModelImpl implements AuthViewModel, AuthListener {
       await this.loginUseCase.loginUser(this.emailQuery, this.passwordQuery);
       this.isShowError = false;
       this.errorMessage = '';
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e : any) {
       this.errorMessage = e.message;
       this.isShowError = true;

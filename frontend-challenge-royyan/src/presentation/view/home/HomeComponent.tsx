@@ -1,12 +1,13 @@
-import React, { ReactNode } from 'react';
-import BaseView from '../BaseView';
 import HomeViewModel from '../../view-model/home/HomeViewModel';
-import Layout, { Content, Header } from 'antd/es/layout/layout';
-import { ConfigProvider, Switch, theme } from 'antd';
-import './home-component.css';
-import AuthViewModel from '../../view-model/auth/AuthViewModel';
 import AuthComponent from '../auth/AuthComponent';
-import Title from 'antd/es/typography/Title';
+import AuthViewModel from '../../view-model/auth/AuthViewModel';
+import { ConfigProvider, Layout, Switch, theme, Typography } from 'antd';
+import { Component, ReactNode } from 'react';
+import BaseView from '../BaseView';
+import './home-component.css';
+
+const { Title } = Typography;
+const { Header, Content } = Layout;
 
 export interface HomeComponentProps {
   homeViewModel: HomeViewModel;
@@ -19,7 +20,7 @@ export interface HomeComponentState {
   darkModeString: string;
 }
 
-export default class HomeComponent extends React.Component<HomeComponentProps, HomeComponentState>
+export default class HomeComponent extends Component<HomeComponentProps, HomeComponentState>
   implements BaseView {
     private homeViewModel: HomeViewModel;
     private authViewModel : AuthViewModel;
@@ -69,7 +70,7 @@ export default class HomeComponent extends React.Component<HomeComponentProps, H
       }}>
         <Layout className={darkModeString+ "-mode container"}>
           <Header className="header">
-            <a href={import.meta.env.BASE_URL}>
+            <a href={"/"}>
               <Title 
                 level={2} 
                 style={{
@@ -91,7 +92,6 @@ export default class HomeComponent extends React.Component<HomeComponentProps, H
                   unCheckedChildren="Light"
                   onChange={this.homeViewModel.onToggleThemeSwitch}
               />
-              
             </div>
           </Header>
           <Content className='content'>

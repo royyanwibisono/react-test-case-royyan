@@ -1,8 +1,8 @@
+import axios from 'axios';
 import NewsRepository from '../../domain/repository/news/NewsRepository';
 import CheckArgsResult from '../../domain/entity/news/structures/CheckArgsResult';
 import NewsApiUtils from '../../presentation/util/NewsApiUtils';
 import NewsResult from '../../domain/entity/news/structures/NewsResult';
-import axios from 'axios';
 
 export default class NewsApi implements NewsRepository {
   /**
@@ -54,17 +54,17 @@ export default class NewsApi implements NewsRepository {
   getNewsQuery(isValid: boolean, country: string, category: string, sources: string, keyword: string, pageSize: number, page: number): Promise<NewsResult>
   {
     const param = keyword.length> 0? {
-      apiKey: import.meta.env.VITE_NEWS_API_KEY,
+      apiKey: process.env.REACT_APP_NEWS_API_KEY,
       q: keyword,
       pageSize,
       page,
     } : sources.length > 0 ? {
-      apiKey: import.meta.env.VITE_NEWS_API_KEY,
+      apiKey: process.env.REACT_APP_NEWS_API_KEY,
       sources,
       pageSize,
       page,
     } : {
-      apiKey: import.meta.env.VITE_NEWS_API_KEY,
+      apiKey: process.env.REACT_APP_NEWS_API_KEY,
       country,
       category,
       pageSize,

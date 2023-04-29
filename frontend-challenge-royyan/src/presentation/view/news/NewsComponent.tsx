@@ -1,11 +1,12 @@
 import React from "react";
 import NewsViewModel from "../../view-model/news/NewsViewModel";
 import BaseView from "../BaseView";
-import { Avatar, Card, List, Pagination } from "antd";
+import { Card, Pagination, Typography } from "antd";
 import moment from "moment";
-import Text from 'antd/es/typography/Text';
 import ArticleViewModel from "../../view-model/article/ArticleViewModel";
 import ArticleComponent from "../article/ArticleComponent";
+
+const { Text } = Typography;
 
 export interface NewsComponentProps {
   newsViewModel: NewsViewModel;
@@ -57,16 +58,25 @@ export default class NewsComponent extends React.Component<NewsComponentProps, N
     };
   }
 
+  private _handleKeyDown = (event: { key: string; }) => {
+    console.log(event);
+    if (event.key === 'Backspace' && this.articleViewModel.visible) {
+      this.articleViewModel.onShowArticle(false);
+    }
+  };
+
   public componentDidMount(): void {
     this.newsViewModel.attachView(this);
-
+    
     if (this.newsViewModel.status !== "loading") {
       this.newsViewModel.onSearchNews("","","","dall-e",20,1);
+    } else {
+      document.addEventListener('keydown', this._handleKeyDown);
     }
-    
   }
 
   public componentWillUnmount(): void {
+    document.removeEventListener('keydown', this._handleKeyDown);
     this.newsViewModel.detachView();
   }
 
@@ -106,22 +116,22 @@ export default class NewsComponent extends React.Component<NewsComponentProps, N
 
   public render(): JSX.Element {
     const {
-      country,
-      category,
-      sources,
-      keyword,
+      // country,
+      // category,
+      // sources,
+      // keyword,
       pageSize,
       page,
 
       isShowError,
       errorMessage,
 
-      status,
+      // status,
       totalResults,
       articles,
     } = this.state;
 
-    const pagination = <>{!isShowError && <div style={{ textAlign: 'center', padding: '1rem 0'}}>
+    const pagination = <>{(totalResults > pageSize) && <div style={{ textAlign: 'center', padding: '1rem 0'}}>
       <Pagination 
         defaultCurrent={1}
         current={page}
@@ -163,7 +173,7 @@ export default class NewsComponent extends React.Component<NewsComponentProps, N
           <Text type='danger'>{errorMessage}</Text>
         </p> 
         : 
-        articles.map((item: any, index: number) => (
+        articles.map((item: ArticleViewModel, index: number) => (
           <Card
             key={index + "-" + item.title}
             id={index  + ""}

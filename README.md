@@ -1,6 +1,6 @@
 # Frontend Challenge
 
-- [ ] Create a List and Detail view for article from [NewsAPI](https://newsapi.org/)
+- [✔] Create a List and Detail view for article from [NewsAPI](https://newsapi.org/)
 - [✔] it should use React
 - [✔] it should use TypeScript
 - [✔] it should use [Ant Design](https://ant.design/) for styling (you can customize the UI if you are interesting with UI/UX)

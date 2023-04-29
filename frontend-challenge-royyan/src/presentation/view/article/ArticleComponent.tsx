@@ -1,12 +1,13 @@
 import React from 'react';
-import { Button, Col, Layout, Row} from 'antd';
+import { Button, Col, Layout, Row, Typography} from 'antd';
 import ArticleViewModel from '../../view-model/article/ArticleViewModel';
 import { ISource } from '../../../domain/entity/article/models/ArticleHolder';
 import BaseView from '../BaseView';
-import { Content, Header } from 'antd/es/layout/layout';
-import Title from 'antd/es/typography/Title';
 import moment from 'moment';
 import './article-component.css';
+
+const { Title } = Typography;
+const { Content, Header } = Layout;
 
 export interface ArticleComponentProps {
   articleViewModel: ArticleViewModel;
@@ -114,7 +115,7 @@ export default class ArticleComponent extends React.Component<ArticleComponentPr
                 <Title 
                   level={1} 
                   style={{
-                    margin: '1em 0',
+                    margin: '0 0 1em 0',
                   }}>
                     {title}
                 </Title>
