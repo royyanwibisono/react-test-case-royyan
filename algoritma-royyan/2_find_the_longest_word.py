@@ -6,7 +6,7 @@ def find_longest_word(sentence):
             longest_word = word
     print(f"Kata terpanjang adalah '{longest_word}' dengan {len(longest_word)} character")
 
-sentence = "Saya sangat senang mengerjakan soal algoritma"
+sentence = "Saya sangat senang mengerjakan mengerjakin soal algoritma"
 
 print(f"input: {sentence}")
 find_longest_word(sentence)
