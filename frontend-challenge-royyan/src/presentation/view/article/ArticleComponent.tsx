@@ -95,7 +95,7 @@ export default class ArticleComponent extends React.Component<ArticleComponentPr
     }
 
     return (
-      <Layout className="acontainer">
+      <Layout className="acontainer" role='acontainer'>
           <Header className="article">
             <a href={url}>
               <Title 
@@ -130,7 +130,7 @@ export default class ArticleComponent extends React.Component<ArticleComponentPr
                   <span><strong>Published:</strong> {moment(publishedAt).fromNow()}</span>
                 </div>
                 <p style={{ marginTop: '1em', fontSize: '1.4em' }}>{content}</p>
-                <Button type='primary' href={url}>Continue reading...</Button>
+                <Button type='primary' href={url} role='continuereading'>Continue reading...</Button>
               </div>
             </div>
           </Content>

@@ -1,5 +1,6 @@
 import NewsHolder from "../../../domain/entity/news/models/NewsHolder";
 import NewsListener from "../../../domain/entity/news/models/NewsListener";
+import { Article } from "../../../domain/entity/news/structures/NewsResult";
 import FindNewsUseCase from "../../../domain/interactors/news/FindNewsUseCase";
 import BaseView from "../../view/BaseView";
 import NewsViewModel from "./NewsViewModel";
@@ -17,7 +18,7 @@ export default class NewsViewModelImpl implements NewsViewModel, NewsListener {
 
   public status: string;
   public totalResults: number;
-  public articles: [];
+  public articles: Article[];
 
   private baseView?: BaseView;
   private findNewsUseCase: FindNewsUseCase;
@@ -80,6 +81,11 @@ export default class NewsViewModelImpl implements NewsViewModel, NewsListener {
     this.findNewsUseCase.searchNews(this.country,this.category,this.sources,this.keyword,pageSize,page);
     this.notifyViewAboutChanges();
   }
+
+  public onKeywordQueryChanged = (keyword: string): void => {
+    this.keyword = keyword;
+    this.notifyViewAboutChanges();
+  };
 
   private notifyViewAboutChanges = (): void => {
     if (this.baseView) {

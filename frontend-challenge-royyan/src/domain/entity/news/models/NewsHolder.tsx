@@ -1,10 +1,11 @@
+import { Article } from '../structures/NewsResult';
 import NewsListener from './NewsListener';
 
 export default class NewsHolder {
   private _newsListeners: NewsListener[];
   private _status: string;
   private _totalResults: number;
-  private _articles: [];
+  private _articles: Article[];
   private _code: string;
   private _message: string;
 
@@ -17,7 +18,7 @@ export default class NewsHolder {
     this._message = "";
   }
 
-  public onUpdateNews(status: string, totalResults: number, articles: [], code: string, message: string): void {
+  public onUpdateNews(status: string, totalResults: number, articles: Article[], code: string, message: string): void {
     this._status = status;
     this._totalResults = totalResults;
     this._articles = articles;
@@ -34,7 +35,7 @@ export default class NewsHolder {
     return this._totalResults??0;
   }
 
-  public getArticles(): [] {
+  public getArticles(): Article[] {
     return this._articles??[];
   }
 

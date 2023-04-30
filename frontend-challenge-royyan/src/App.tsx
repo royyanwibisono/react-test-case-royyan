@@ -17,7 +17,7 @@ import ArticleViewModelImpl from './presentation/view-model/article/ArticleViewM
 function App() {
   // data layer
   const authRepository = new AuthFakeApi();
-  const newsRRepository = new NewsApi()
+  const newsRepository = new NewsApi()
   // domain layer
   const homeHolder = new HomeHolder();
   const authHolder = new AuthHolder();
@@ -25,7 +25,7 @@ function App() {
   const articleHolder = new ArticleHolder();
   const settingsUseCase = new SettingsUseCase(homeHolder);
   const loginUseCase = new LoginUseCase(authRepository, authHolder);
-  const findNewsUseCase = new FindNewsUseCase(newsRRepository,newsHolder);
+  const findNewsUseCase = new FindNewsUseCase(newsRepository,newsHolder);
   // view layer
   const homeViewModel = new HomeViewModelImpl(settingsUseCase, homeHolder);
   const authViewModel = new AuthViewModelImpl(loginUseCase, authHolder);

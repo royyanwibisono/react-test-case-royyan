@@ -98,7 +98,7 @@ export default class AuthComponent extends React.Component<AuthComponentProps, A
 
     return (
       <>
-        <Button type="ghost" onClick={this.authViewModel.onShowModal}>
+        <Button type="ghost" onClick={this.authViewModel.onShowModal} role='btnshowlogin'>
           LOGIN
         </Button>
       

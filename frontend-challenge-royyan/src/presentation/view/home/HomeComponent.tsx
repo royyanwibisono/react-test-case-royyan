@@ -64,7 +64,7 @@ export default class HomeComponent extends Component<HomeComponentProps, HomeCom
     return (
       <ConfigProvider theme={{
         token: {
-          colorPrimary: '#c96604',
+          colorPrimary: isDarkMode? '#c96604' : '#ff6600',
         },
         algorithm: isDarkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
       }}>

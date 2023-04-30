@@ -36,7 +36,7 @@ describe('HomeComponent', () => {
     expect(screen.getByRole('link', { name: 'News' })).toHaveAttribute('href', process.env.PUBLIC_URL);
     expect(screen.getByRole('switch')).toBeInTheDocument();
 
-    const loginButtonElement = screen.getByRole('button');
+    const loginButtonElement = screen.getByRole('btnshowlogin');
     expect(loginButtonElement).toHaveTextContent(/login/i);
     
     fireEvent.click(loginButtonElement);

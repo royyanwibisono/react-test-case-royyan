@@ -1,6 +1,6 @@
 {
   "short_name": "News Royyan",
-  "name": "News app using clean architecture",
+  "name": "News app using React js typescript with clean architecture implementation",
   "icons": [
     {
       "src": "favicon.ico",

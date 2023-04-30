@@ -1,0 +1,26 @@
+header.headernews{
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  overflow: auto;
+}
+
+.light-mode header.headernews{
+  background: #2970b8;
+} 
+
+ul.ant-menu{
+  background: unset;
+}
+
+.search-bar{
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.search-bar input{
+  min-width: 200px;
+}

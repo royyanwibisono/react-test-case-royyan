@@ -15,7 +15,7 @@ header.article{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: var(--header-height);
+  /* height: var(--header-height); */
 }
 
 .light-mode header.article{
