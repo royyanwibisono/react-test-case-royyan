@@ -117,7 +117,7 @@ export default class AuthComponent extends React.Component<AuthComponentProps, A
             }}>
             <div>
               Status:&nbsp;
-              <Text type={`${isAuthStatusPositive ? 'success' : 'danger'}`}>{authStatus}</Text>
+              <Text type={`${isAuthStatusPositive ? 'success' : 'danger'}`} role='authstatus'>{authStatus}</Text>
             </div>
 
             <div className="row mt-2">
@@ -127,6 +127,7 @@ export default class AuthComponent extends React.Component<AuthComponentProps, A
                   this.authViewModel.onEmailQueryChanged(e.currentTarget.value);
                 }}
                 value={emailQuery}
+                role='authinputuname'
               />
             </div>
             <div className="row mt-2">
@@ -136,16 +137,19 @@ export default class AuthComponent extends React.Component<AuthComponentProps, A
                   this.authViewModel.onPasswordQueryChanged(e.currentTarget.value);
                 }}
                 value={passwordQuery}
+                role='authinputpwd'
               />
             </div>
 
             {isShowError && (
-              <Text type='danger'>{errorMessage}</Text>
+              <Text type='danger' role='autherrormsg'>{errorMessage}</Text>
             )}
 
             {isSignInButtonVisible && (
               <Row justify="end">
-                <Button type="primary" 
+                <Button 
+                  type="primary" 
+                  role='btnsignin'
                   onClick={(): void => this.authViewModel.onClickSignIn()}>
                     Sign in
                 </Button>
@@ -154,7 +158,9 @@ export default class AuthComponent extends React.Component<AuthComponentProps, A
 
             {isSignOutButtonVisible && (
               <Row justify="end">
-                <Button type="default" 
+                <Button 
+                  type="default" 
+                  role='btnsignout'
                   onClick={(): void => this.authViewModel.onClickSignOut()}
                 >
                   Sign out

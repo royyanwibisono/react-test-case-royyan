@@ -68,9 +68,9 @@ export default class HomeComponent extends Component<HomeComponentProps, HomeCom
         },
         algorithm: isDarkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
       }}>
-        <Layout className={darkModeString+ "-mode container"}>
+        <Layout className={darkModeString+ "-mode container"} role='container'>
           <Header className="header">
-            <a href={"/"}>
+            <a href={process.env.PUBLIC_URL}>
               <Title 
                 level={2} 
                 style={{

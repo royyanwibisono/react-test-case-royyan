@@ -7,7 +7,7 @@
 - [✔] it should be open sourced on your github repo
 
 # Extras
-- [ ] Test your components with [jest](https://jest-everywhere.now.sh)
+- [✔] Test your components with [jest](https://jest-everywhere.now.sh)
 - [✔] it should use [Clean Architecture](https://medium.com/@rostislavdugin/the-clean-architecture-using-react-and-typescript-a832662af803) as design pattern
 
 
