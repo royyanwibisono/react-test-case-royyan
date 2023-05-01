@@ -21,9 +21,9 @@ The components in the project have been tested using Jest. The tests ensure that
 
 ## Work Logs
 - Day 1 : setup React project using vite, deep learning about Clean Architecture design patterns, deep learning about Ant Design.
-- Day 2 : implement Clean Architecture to HomeComponent
-- Day 3 : implement Clean Architecture to NewsComponent and ArticlesComponent
-- Day 4+ : Add Jest script for Components, edit UI/UX, bugfixings
+- Day 2 : implement Clean Architecture to HomeComponent.
+- Day 3 : implement Clean Architecture to NewsComponent and ArticlesComponent.
+- Day 4+ : Add Jest script for Components, edit UI/UX, bugfixings.
 
 ## Features
 - Articles by categories : Business, Entertainment, General, Health, Science, Sports, and Technology.
